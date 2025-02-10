@@ -38,10 +38,20 @@
     {% endfor %}
     </tbody>
 
+
+    <h1>Brani della Playlist</h1>
+    <ul>
+        {% for track in tracks %}
+            <li>{{ track['track']['name'] }} - {{ track['track']['artists'][0]['name'] }}</li>
+        {% endfor %}
+    </ul>
 </table>
     {% else %}
 <p>Non hai playlist disponibili.</p>
     {% endif %}
+
+    <p><a href="/pagina-brani">Visualizza brani</a></p>
+
 </body>
 
 </html>
