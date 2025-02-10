@@ -43,7 +43,22 @@ def home():
 
     print(user_info) #capiamo la struttura di user_info per usarle nel frontend
 
+    #config SpotifyOAuth per l'autenticazione e redirect uri
+    
     return render_template('home.html', user_info=user_info) #passo le info utente all'home.html
+    
+    @app.route('/logout')
+    def logout():
+        session.clear() #cancelliamo l'access token salvato in session
+        sp_oauth = SpotifyOAuth(
+            client_id=SPOTIFY_CLIENT_ID,
+            client_secret=SPOTIFY_CLIENT_SECRET,
+            redirect_uri=SPOTIFY_REDIRECT_URI,
+            scope="user-read-private", #permessi x informazioni dell'utente
+            show_dialog=True #forziamo la richiesta di inserire new credenziali
+            )
+    return redirect(url_for('login'))
+
 
 if __name__=="__main__":
         app.run(debug=True)
