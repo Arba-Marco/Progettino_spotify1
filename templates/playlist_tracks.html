@@ -17,8 +17,6 @@
                 <tr>
                     <th scope="col">Nome Brano</th>
                     <th scope="col">Artista</th>
-                    <th scope="col">Durata</th>
-                    <th scope="col">Link Spotify</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,13 +25,9 @@
                     <td>{{ track['track']['name'] }}</td>
                     <td>{{ track['track']['artists'][0]['name'] }}</td>
                     <td>
-                        {% set duration_ms = track['track']['duration_ms'] %}
-                        {% set seconds = duration_ms // 1000 %}
-                        {% set minutes = seconds // 60 %}
-                        {% set remaining_seconds = seconds % 60 %}
-                        {{ '{:02}:{:02}'.format(minutes, remaining_seconds) }}
+                   
                     </td>
-                    <td><a href="{{ track['track']['external_urls']['spotify'] }}" target="_blank">Ascolta su Spotify</a></td>
+                    
                 </tr>
                 {% endfor %}
             </tbody>
