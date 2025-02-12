@@ -1,57 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profilo Utente</title>
-</head>
-
-<body>
-        <h1>Benvenuto, {{ user_info['display_name'] }}!</h1>
-        {% if user_info['images'] %}
-        <img src="{{ user_info['images'][0]['url'] }}" width="200" alt="Immagine profilo">
-        {% endif %}
-        <h2>Le tue Playlist:</h2>
-    {% if playlists %}
+<h1>Benvenuto, {{ user_info['display_name'] }}!</h1>
+{% if user_info['images'] %}
+<img src="{{ user_info['images'][0]['url'] }}" width="200" alt="Immagine profilo">
+{% endif %}
+<h2>Le tue Playlist:</h2>
+{% if playlists %}
 <table>
 <thead>
     <tr>
-    <th>|Nome Playlist|</th>
-    <th>|Numero di Brani|</th>
-    <th>|Copertina|</th>
+        <th>Nome Playlist</th>
+        <th>Numero di Brani</th>
+        <th>Copertina</th>
+        <th>Azioni</th>
     </tr>
 </thead>
-    <tbody>
+<tbody>
     {% for playlist in playlists %}
     <tr>
-    <td>{{ playlist['name'] }}</td>
-    <td>{{ playlist['tracks']['total'] }}</td>
-    <td>
-    {% if playlist['images'] %}
-    <img src="{{ playlist['images'][0]['url'] }}" width="50" alt="Copertina playlist">
-    {% else %}
-    Nessuna immagine
-    {% endif %}
-    </td>
+        <td>{{ playlist['name'] }}</td>
+        <td>{{ playlist['tracks']['total'] }}</td>
+        <td>
+        {% if playlist['images'] %}
+        <img src="{{ playlist['images'][0]['url'] }}" width="50" alt="Copertina playlist">
+        {% else %}
+        Nessuna immagine
+        {% endif %}
+        </td>
+        <td>
+            <a href="{{ url_for('playlist_tracks', playlist_id=playlist['id']) }}">Visualizza brani</a>
+        </td>
     </tr>
     {% endfor %}
-    </tbody>
-
-
-    <h1>Brani della Playlist</h1>
-    <ul>
-        {% for track in tracks %}
-            <li>{{ track['track']['name'] }} - {{ track['track']['artists'][0]['name'] }}</li>
-        {% endfor %}
-    </ul>
+</tbody>
 </table>
-    {% else %}
+{% else %}
 <p>Non hai playlist disponibili.</p>
-    {% endif %}
-
-    <p><a href="/pagina-brani">Visualizza brani</a></p>
-
-</body>
-
-</html>
+{% endif %}

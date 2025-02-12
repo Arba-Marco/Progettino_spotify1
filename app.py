@@ -49,6 +49,19 @@ def home():
 
     return render_template('home.html', user_info=user_info, playlists=playlists['items'])
 
+@app.route('/playlist/<playlist_id>')
+def playlist_tracks(playlist_id):
+    token_info = session.get('token_info', None)
+
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+
+    # Recupera i brani della playlist
+    results = sp.playlist_tracks(playlist_id)
+    tracks = results['items']
+    
+    return render_template('playlist_tracks.html', tracks=tracks)
+
+
 @app.route('/logout')
 def logout():
     session.clear()
